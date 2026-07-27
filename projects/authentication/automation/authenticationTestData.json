@@ -1,0 +1,26 @@
+[
+  {
+    "label": "Should login successfully with valid user",
+    "username": "tomsmith",
+    "password": "SuperSecretPassword!",
+    "expectedUrl": "https://the-internet.herokuapp.com/secure",
+    "messageType": "success",
+    "expectedMessage": "You logged into a secure area!"
+  },
+  {
+    "label": "Should login fail with invalid username",
+    "username": "invaliduser",
+    "password": "SuperSecretPassword!",
+    "expectedUrl": "https://the-internet.herokuapp.com/login",
+    "messageType": "error",
+    "expectedMessage": "Your username is invalid!"
+  },
+  {
+    "label": "Should login fail with invalid password",
+    "username": "tomsmith",
+    "password": "wrongpassword",
+    "expectedUrl": "https://the-internet.herokuapp.com/login",
+    "messageType": "error",
+    "expectedMessage": "Your password is invalid!"
+  }
+]

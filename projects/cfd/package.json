@@ -1,0 +1,15 @@
+{
+  "name": "@qa-hub/cfd",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:ui:allure": "..\\..\\shared\\playwright-config\\test-ui-allure.bat",
+    "test:allure": "..\\..\\shared\\playwright-config\\allure-test.bat",
+    "allure:watch": "node ..\\..\\shared\\playwright-config\\allure-watch.js",
+    "allure:serve": "..\\..\\shared\\playwright-config\\allure-serve.bat",
+    "report": "playwright show-report reports/playwright-report"
+  }
+}

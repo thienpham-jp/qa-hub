@@ -1,0 +1,15 @@
+node_modules/
+dist/
+
+# Playwright / Allure outputs (per project)
+**/reports/allure-results/
+**/reports/allure-report/
+**/reports/playwright-report/
+**/reports/test-results/
+**/reports/.trigger
+
+# Dashboard combined output
+dashboard/combined-allure-results/
+dashboard/combined-report/
+
+*.log

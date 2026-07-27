@@ -1,0 +1,34 @@
+{
+  "name": "qa-hub",
+  "version": "1.0.0",
+  "private": true,
+  "description": "QA monorepo - test cases, automation and reports for all projects",
+  "workspaces": [
+    "shared",
+    "projects/*",
+    "dashboard"
+  ],
+  "scripts": {
+    "test": "node shared/playwright-config/run-tests-and-refresh.js npm run test --workspaces --if-present",
+    "test:authentication": "node shared/playwright-config/run-tests-and-refresh.js npm run test --workspace=projects/authentication",
+    "test:cfd": "node shared/playwright-config/run-tests-and-refresh.js npm run test --workspace=projects/cfd",
+    "test:istools": "node shared/playwright-config/run-tests-and-refresh.js npm run test --workspace=projects/istools",
+    "test:publisher": "node shared/playwright-config/run-tests-and-refresh.js npm run test --workspace=projects/publisher",
+    "test:api": "node shared/playwright-config/run-tests-and-refresh.js npm run test --workspace=projects/api",
+    "dashboard:merge": "npm run merge --workspace=dashboard",
+    "dashboard:generate": "npm run generate --workspace=dashboard",
+    "dashboard:build": "npm run build --workspace=dashboard",
+    "dashboard:refresh": "npm run dashboard:merge && npm run dashboard:generate",
+    "dashboard:watch": "node shared/playwright-config/dashboard-watch.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^22.20.1",
+    "@types/pg": "^8.20.0",
+    "allure-commandline": "^2.42.0",
+    "allure-playwright": "^3.0.0",
+    "pg": "^8.20.0",
+    "playwright-qase-reporter": "^2.5.6",
+    "typescript": "^5.0.0"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "admin": {
+    "username": "obs-dev@interspace.ne.jp",
+    "password": "1nter5pace"
+  },
+  "normalUser": {
+    "username": "k_saito",
+    "password": "X0%eCa5M"
+  },
+  "invalidUser": {
+    "username": "invaliduser",
+    "password": "SuperSecretPassword!"
+  },
+  "pubUser": {
+    "username": "thienpham.jp@interspace.vn",
+    "password": "Thien@123"
+  },
+  "secretKey": {
+    "user": "llt5mq1tpa05vap4ta91aqaaaalx9440",
+    "key": "511ec2zzzzbz0ezs1jz40czjs0bxls22"
+  },
+  "secretKeyVN": {
+    "user": "llt5mqx11xxl291lta91aqaaaalxxq67",
+    "key": "8qbcc2zzzzbz0ezs20e9jjz90cbxls22"
+  },
+  "cfdUser": {
+    "username": "cfd_admin",
+    "password": "CFD-Dash#2026!secure"
+  },
+  "cfd-db": {
+    "host": "172.31.80.162",
+    "port": 31721,
+    "user": "cfd_user_id",
+    "password": "CFD@12345678"
+  },
+  "cfd-id-db": {
+    "database": "cfd-id"
+  },
+  "cfd-th-db": {
+    "database": "cfd-th"
+  },
+  "qase": {
+    "token": "e3d2672d48c1354c0e43559f815a82715469e5e6bb3e5fdb7852931f64f74887"
+  }
+}

@@ -1,0 +1,21 @@
+[
+  {
+    "label": "Should login successfully with admin user",
+    "userType": "admin",
+    "expectedUrl": "https://st-istools-id.asean-accesstrade.net/s/dashboard",
+    "expectedError": ""
+  },
+  {
+    "label": "Should login successfully with normal user",
+    "userType": "normal",
+    "expectedUrl": "https://st-istools-id.asean-accesstrade.net/s/dashboard",
+    "expectedError": ""
+  },
+  {
+    "label": "Should login fail with wrong password",
+    "userType": "normal",
+    "passwordOverride": "wrongpassword",
+    "expectedUrl": "https://st-istools-id.asean-accesstrade.net/s/signin",
+    "expectedError": "UserID or password is not correct"
+  }
+]

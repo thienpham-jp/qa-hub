@@ -1,0 +1,12 @@
+{
+  "name": "@qa-hub/dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Merges reports/allure-results from every project into one combined Allure report",
+  "scripts": {
+    "merge": "node merge-reports.js",
+    "generate": "npx allure generate combined-allure-results --clean -o combined-report",
+    "open": "npx allure open combined-report -p 5253",
+    "build": "npm run merge && npm run generate && npm run open"
+  }
+}
