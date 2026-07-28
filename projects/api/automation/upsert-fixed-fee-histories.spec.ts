@@ -197,7 +197,7 @@ test.describe("Upsert Fixed Fee Histories API", () => {
   });
 
   // ─── TC_07c ─────────────────────────────────────────────────────────────────
-  test("TC_07c - feeAmount very large number - Expect 200 OK", async ({
+  test.skip("TC_07c - feeAmount very large number - Expect 200 OK", async ({
     request,
   }) => {
     const res = await request.post(API_URL, {

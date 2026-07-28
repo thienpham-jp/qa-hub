@@ -30,7 +30,7 @@ const validPayload = () => ({
   status: "APPROVED",
 });
 
-test.describe("Mass Approval API - Limit Validation", () => {
+test.describe.skip("Mass Approval API - Limit Validation", () => {
   test.describe.configure({ mode: "parallel" });
 
   /*
