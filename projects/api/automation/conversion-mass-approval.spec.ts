@@ -30,7 +30,7 @@ const validPayload = () => ({
   status: "APPROVED",
 });
 
-test.describe.skip("Mass Approval API - Limit Validation", () => {
+test.describe("Mass Approval API - Limit Validation", () => {
   test.describe.configure({ mode: "parallel" });
 
   /*
@@ -49,6 +49,7 @@ test.describe.skip("Mass Approval API - Limit Validation", () => {
     11. Authentication failure (no token) - Expect 401 Unauthorized
     12. Authorization failure (restricted user) - Expect 401 Unauthorized
     13. Missing user type - Expect 400 Bad Request
+    14. User has no permissions change PENDING status - Expect 403 Forbidden
    */
 
   // ── Validation for conversionId Limit (100,000) ─────────────────────────────
@@ -334,4 +335,23 @@ test.describe.skip("Mass Approval API - Limit Validation", () => {
     expect(response.status()).toBe(400);
     expect(JSON.stringify(body)).toMatch(/invalid user type:/i);
   });
-}); // end: Mass Approval API - Limit Validation
+
+  // ─── TC_15 ──────────────────────────────────────────────────────────────────
+  test("TC_15 - User has no permissions change PENDING status - Expect 403 Forbidden", async ({
+    page,
+  }) => {
+    const testToken = `Bearer ${generateJWT("llt5mq1tpatmvap4ta91aqaaaalx9440", "511ec2zzzzbz0ezs1jz4jbbjs0bxls22")}`;
+
+    const response = await page.request.put(API_URL, {
+      headers: { ...getAuthHeaders(), Authorization: testToken },
+      data: {
+        ...validPayload(),
+        status: "PENDING",
+      },
+      timeout: 60_000,
+    });
+    const body = await logResponse(response);
+    expect(response.status()).toBe(403);
+    expect(JSON.stringify(body)).toMatch(/Forbidden/i);
+  });
+});

@@ -33,7 +33,7 @@ export function createBaseConfig(
     testDir: path.join(projectDir, "automation"),
     outputDir: path.join(reportsDir, "test-results"),
     testIgnore: [
-      "**/publisher/PublisherStagTest.spec.ts",
+      "**/publisher/automation/PublisherStagTest.spec.ts",
       "**/istools/**",
       "**/cfd/**",
     ],

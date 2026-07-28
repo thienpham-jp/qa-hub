@@ -214,7 +214,7 @@ test.describe("Publisher Staging Tests", () => {
 
       await publisherPage.page
         .locator('input[type="file"]')
-        .setInputFiles("D:/git/qa-hub/shared/fixtures/images/lgtm.png");
+        .setInputFiles("../../../shared/fixtures/images/lgtm.png");
 
       await publisherPage.page
         .locator('input[name="firstName"]')
