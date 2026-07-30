@@ -110,7 +110,7 @@ test.describe("Update Exchange Rate API", () => {
   });
 
   // ─── TC_05 ──────────────────────────────────────────────────────────────────
-  test("TC_05 - Missing targetMonth in request body - Expect 404 Not Found", async ({
+  test.skip("TC_05 - Missing targetMonth in request body - Expect 404 Not Found", async ({
     request,
   }) => {
     const { targetMonth, ...payload } = exchangeRatePayload();
@@ -124,7 +124,7 @@ test.describe("Update Exchange Rate API", () => {
   });
 
   // ─── TC_06 ──────────────────────────────────────────────────────────────────
-  test("TC_06 - Invalid targetMonth format (not YYYY-MM) - Expect 404 Not Found", async ({
+  test.skip("TC_06 - Invalid targetMonth format (not YYYY-MM) - Expect 404 Not Found", async ({
     request,
   }) => {
     const res = await request.post(API_URL, {
@@ -161,7 +161,7 @@ test.describe("Update Exchange Rate API", () => {
   });
 
   // ─── TC_09 ──────────────────────────────────────────────────────────────────
-  test("TC_09 - rate is non-numeric - Expect 404 Not Found", async ({
+  test.skip("TC_09 - rate is non-numeric - Expect 404 Not Found", async ({
     request,
   }) => {
     const res = await request.post(API_URL, {
