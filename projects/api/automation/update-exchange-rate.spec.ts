@@ -49,6 +49,7 @@ test.describe("Update Exchange Rate API", () => {
    * 11. campaignIds contains a non-existing campaign ID - Expect 404 Not Found
    * 12. campaignIds is an empty array - Expect 200 OK
    * 13. Valid request with correct payload and headers - Expect 200 OK
+   * 14. User has no permissions to change exchange rate - Expect 403 Forbidden
    */
 
   // ─── TC_01 ──────────────────────────────────────────────────────────────────
@@ -224,5 +225,20 @@ test.describe("Update Exchange Rate API", () => {
     });
     const body = await logResponse(res);
     expect(res.status()).toBe(200);
+  });
+
+  // ─── TC_14 ──────────────────────────────────────────────────────────────────
+  test.skip("TC_14 - User has no permissions change exchange rate - Expect 403 Forbidden", async ({
+    request,
+  }) => {
+    const testToken = `Bearer ${generateJWT("llt5mq1tpatmvap4ta91aqaaaalx9440", "511ec2zzzzbz0ezs1jz4jbbjs0bxls22")}`;
+
+    const res = await request.post(API_URL, {
+      headers: { ...getAuthHeaders(), Authorization: testToken },
+      data: exchangeRatePayload(),
+    });
+    const body = await logResponse(res);
+    expect(res.status()).toBe(403);
+    expect(JSON.stringify(body)).toMatch(/You don't have permission/i);
   });
 });
