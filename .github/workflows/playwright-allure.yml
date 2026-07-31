@@ -50,11 +50,14 @@ jobs:
         run: npx playwright install-deps chromium
 
       # ── Download Allure history for trend tracking ──
+      # merge-reports.js chỉ carry-forward history từ dashboard/combined-report/history
+      # (xem COMBINED_REPORT_HISTORY_DIR trong script) — KHÔNG phải combined-allure-results/history,
+      # vì thư mục đó sẽ bị merge-reports.js xóa sạch (fs.rmSync) trước khi merge.
       - name: Download previous Allure history
         uses: dawidd6/action-download-artifact@v9
         with:
           name: allure-history
-          path: dashboard/combined-allure-results/history
+          path: dashboard/combined-report/history
           workflow_conclusion: completed
           if_no_artifact_found: warn
 
