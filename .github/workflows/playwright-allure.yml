@@ -82,12 +82,15 @@ jobs:
           fi
 
       # ── Save Allure history for next run ──
+      # FIX: lấy history từ output report (đã merge trend của lần chạy hiện tại),
+      # KHÔNG lấy từ combined-allure-results/history (đó là history cũ được tải về ở bước trên,
+      # chưa hề được cập nhật) — nếu không Trend sẽ không bao giờ tích lũy thêm dữ liệu.
       - name: Upload Allure history
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: allure-history
-          path: dashboard/combined-allure-results/history
+          path: dashboard/combined-report/history
           retention-days: 90
 
       # ── Artifact: Combined Allure Report ──

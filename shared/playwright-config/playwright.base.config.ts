@@ -92,7 +92,7 @@ export function createBaseConfig(
       screenshot: "only-on-failure",
       video: "retain-on-failure",
       // Run on CI in headless mode, local with visible browser for debugging
-      headless: !!process.env.CI,
+      headless: true || !!process.env.CI,
       launchOptions: {
         args: [
           "--start-maximized",
