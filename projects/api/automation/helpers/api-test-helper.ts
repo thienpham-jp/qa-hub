@@ -25,14 +25,19 @@ export const getStaffToken = (): string =>
  * Parses and logs the API response body. Falls back to raw text if JSON
  * parsing fails. Safe to call on any APIResponse regardless of content type.
  */
-export async function logResponse(res: APIResponse): Promise<any> {
+export async function logResponse(
+  res: APIResponse,
+  logResults: boolean = true,
+): Promise<any> {
   let responseBody: any = null;
   try {
     const rawBody = await res.text();
     responseBody =
       rawBody && typeof rawBody === "string" ? JSON.parse(rawBody) : rawBody;
     if (responseBody !== "") {
-      console.log(JSON.stringify(responseBody, null, 2));
+      if (logResults) {
+        console.log(JSON.stringify(responseBody, null, 2));
+      }
     }
   } catch (error) {
     console.error("Failed to parse response body as JSON:", error);
