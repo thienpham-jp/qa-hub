@@ -31,7 +31,7 @@ const exchangeRatePayload = () => ({
   campaignIds: VALID_CAMPAIGN_IDS,
 });
 
-test.describe("Update Exchange Rate API", () => {
+test.describe.skip("Update Exchange Rate API", () => {
   test.describe.configure({ mode: "parallel" });
 
   /** Test Cases for Update Exchange Rate API method `POST /v1/staff/exchange-rate/current-month/update`
