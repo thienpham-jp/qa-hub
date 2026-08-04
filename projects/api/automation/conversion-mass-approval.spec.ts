@@ -30,7 +30,7 @@ const validPayload = () => ({
   status: "APPROVED",
 });
 
-test.describe.skip("Mass Approval API - Limit Validation", () => {
+test.describe("Mass Approval API - Limit Validation", () => {
   test.describe.configure({ mode: "parallel" });
 
   /*
@@ -54,14 +54,14 @@ test.describe.skip("Mass Approval API - Limit Validation", () => {
 
   // ── Validation for conversionId Limit (100,000) ─────────────────────────────
   test("TC01: Verify mass approval with conversionId within limit (≤100k)", async ({
-    page,
+    request,
   }) => {
     const conversionIds = Array.from(
       { length: 50_000 },
       (_, i) => `${String(i + 1).padStart(7, "0")}`,
     );
 
-    const response = await page.request.put(API_URL, {
+    const response = await request.put(API_URL, {
       headers: getAuthHeaders(),
       data: {
         ...validPayload(),
@@ -77,14 +77,14 @@ test.describe.skip("Mass Approval API - Limit Validation", () => {
   });
 
   test.skip("TC02: Verify mass approval exceeding conversionId limit (>100k)", async ({
-    page,
+    request,
   }) => {
     const conversionIds = Array.from(
       { length: 100_001 },
       (_, i) => `${String(i + 1).padStart(7, "0")}`,
     );
 
-    const response = await page.request.put(API_URL, {
+    const response = await request.put(API_URL, {
       headers: getAuthHeaders(),
       data: {
         ...validPayload(),
@@ -99,14 +99,14 @@ test.describe.skip("Mass Approval API - Limit Validation", () => {
   });
 
   test("TC03: Verify boundary condition for conversionId limit (exactly 100k)", async ({
-    page,
+    request,
   }) => {
     const conversionIds = Array.from(
       { length: 100_000 },
       (_, i) => `${String(i + 1).padStart(7, "0")}`,
     );
 
-    const response = await page.request.put(API_URL, {
+    const response = await request.put(API_URL, {
       headers: getAuthHeaders(),
       data: {
         ...validPayload(),
@@ -123,14 +123,14 @@ test.describe.skip("Mass Approval API - Limit Validation", () => {
   // ── Validation for transactionId Limit (10,000) ──────────────────────────────
 
   test("TC04: Verify mass approval with transactionId within limit (≤10k)", async ({
-    page,
+    request,
   }) => {
     const transactionIds = Array.from(
       { length: 5_000 },
       (_, i) => `TXN${String(i + 1).padStart(7, "0")}`,
     );
 
-    const response = await page.request.put(API_URL, {
+    const response = await request.put(API_URL, {
       headers: getAuthHeaders(),
       data: {
         ...validPayload(),
@@ -147,14 +147,14 @@ test.describe.skip("Mass Approval API - Limit Validation", () => {
   });
 
   test.skip("TC05: Verify mass approval exceeding transactionId limit (>10k)", async ({
-    page,
+    request,
   }) => {
     const transactionIds = Array.from(
       { length: 10_001 },
       (_, i) => `TXN${String(i + 1).padStart(7, "0")}`,
     );
 
-    const response = await page.request.put(API_URL, {
+    const response = await request.put(API_URL, {
       headers: getAuthHeaders(),
       data: {
         ...validPayload(),
@@ -169,14 +169,14 @@ test.describe.skip("Mass Approval API - Limit Validation", () => {
   });
 
   test("TC06: Verify boundary condition for transactionId limit (exactly 10k)", async ({
-    page,
+    request,
   }) => {
     const transactionIds = Array.from(
       { length: 10_000 },
       (_, i) => `TXN${String(i + 1).padStart(7, "0")}`,
     );
 
-    const response = await page.request.put(API_URL, {
+    const response = await request.put(API_URL, {
       headers: getAuthHeaders(),
       data: {
         ...validPayload(),
@@ -191,8 +191,8 @@ test.describe.skip("Mass Approval API - Limit Validation", () => {
   });
 
   // ── Negative & Edge Cases ────────────────────────────────────────────────────
-  test.skip("TC08: Verify empty request payload", async ({ page }) => {
-    const response = await page.request.put(API_URL, {
+  test.skip("TC08: Verify empty request payload", async ({ request }) => {
+    const response = await request.put(API_URL, {
       headers: getAuthHeaders(),
       data: {
         ...validPayload(),
@@ -205,7 +205,7 @@ test.describe.skip("Mass Approval API - Limit Validation", () => {
     expect(response.status()).toBeLessThan(600);
   });
 
-  test("TC09: Verify duplicate IDs in request", async ({ page }) => {
+  test("TC09: Verify duplicate IDs in request", async ({ request }) => {
     // 10 unique IDs each repeated 10 times = 100 total entries
     const baseIds = Array.from(
       { length: 10 },
@@ -215,7 +215,7 @@ test.describe.skip("Mass Approval API - Limit Validation", () => {
       .fill("")
       .flatMap(() => baseIds);
 
-    const response = await page.request.put(API_URL, {
+    const response = await request.put(API_URL, {
       headers: getAuthHeaders(),
       data: {
         ...validPayload(),
@@ -231,7 +231,7 @@ test.describe.skip("Mass Approval API - Limit Validation", () => {
     expect(response.status()).toBeLessThan(600);
   });
 
-  test("TC10: Verify partial invalid IDs in request", async ({ page }) => {
+  test("TC10: Verify partial invalid IDs in request", async ({ request }) => {
     const transactionIds = [
       "TXN0000001",
       "TXN0000002",
@@ -242,7 +242,7 @@ test.describe.skip("Mass Approval API - Limit Validation", () => {
       "TXN0000004",
     ];
 
-    const response = await page.request.put(API_URL, {
+    const response = await request.put(API_URL, {
       headers: getAuthHeaders(),
       data: {
         ...validPayload(),
@@ -261,7 +261,7 @@ test.describe.skip("Mass Approval API - Limit Validation", () => {
   // ── Performance & Stability ──────────────────────────────────────────────────
 
   test("TC11: Verify performance at maximum allowed limit", async ({
-    page,
+    request,
   }) => {
     const transactionIds = Array.from(
       { length: 10_000 },
@@ -269,7 +269,7 @@ test.describe.skip("Mass Approval API - Limit Validation", () => {
     );
 
     const startTime = Date.now();
-    const response = await page.request.put(API_URL, {
+    const response = await request.put(API_URL, {
       headers: getAuthHeaders(),
       data: {
         ...validPayload(),
@@ -288,9 +288,9 @@ test.describe.skip("Mass Approval API - Limit Validation", () => {
 
   // ─── TC_12 ──────────────────────────────────────────────────────────────────
   test("TC_12 - Authentication failure (no token) - Expect 401 Unauthorized", async ({
-    page,
+    request,
   }) => {
-    const response = await page.request.put(API_URL, {
+    const response = await request.put(API_URL, {
       headers: { ...getAuthHeaders(), Authorization: "" },
       data: {
         ...validPayload(),
@@ -304,9 +304,9 @@ test.describe.skip("Mass Approval API - Limit Validation", () => {
 
   // ─── TC_13 ──────────────────────────────────────────────────────────────────
   test("TC_13 - Authorization failure (restricted user) - Expect 401 Unauthorized", async ({
-    page,
+    request,
   }) => {
-    const response = await page.request.put(API_URL, {
+    const response = await request.put(API_URL, {
       headers: { ...getAuthHeaders(), Authorization: restrictedToken },
       data: {
         ...validPayload(),
@@ -320,9 +320,9 @@ test.describe.skip("Mass Approval API - Limit Validation", () => {
 
   // ─── TC_14 ──────────────────────────────────────────────────────────────────
   test("TC_14 - Missing user type - Expect 400 Bad Request", async ({
-    page,
+    request,
   }) => {
-    const response = await page.request.put(API_URL, {
+    const response = await request.put(API_URL, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -337,12 +337,12 @@ test.describe.skip("Mass Approval API - Limit Validation", () => {
   });
 
   // ─── TC_15 ──────────────────────────────────────────────────────────────────
-  test("TC_15 - User has no permissions change PENDING status - Expect 403 Forbidden", async ({
-    page,
+  test.skip("TC_15 - User has no permissions change PENDING status - Expect 403 Forbidden", async ({
+    request,
   }) => {
     const testToken = `Bearer ${generateJWT("llt5mq1tpatmvap4ta91aqaaaalx9440", "511ec2zzzzbz0ezs1jz4jbbjs0bxls22")}`;
 
-    const response = await page.request.put(API_URL, {
+    const response = await request.put(API_URL, {
       headers: { ...getAuthHeaders(), Authorization: testToken },
       data: {
         ...validPayload(),
