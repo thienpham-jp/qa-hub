@@ -20,4 +20,8 @@ export const CFD_PASSWORD = users.cfdUser.password;
 
 export const QASE_TOKEN = users.qase.token;
 
+// Publisher User Credentials
+export const PUB_USERNAME = users.pubUserStag.username;
+export const PUB_PASSWORD = users.pubUserStag.password;
+
 export { users, USER_UID, SECRET_KEY, USER_UID_VN, SECRET_KEY_VN };
