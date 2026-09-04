@@ -13,16 +13,27 @@ export class PublisherPage extends IstoolsPage {
 
     try {
       await page.goto(loginUrl, {
-        waitUntil: "domcontentloaded",
-        timeout: 90000,
+        waitUntil: "load",
+        timeout: 60000,
       });
     } catch (error) {
-      console.error("❌ Failed to navigate to partner portal:", error);
+      const errorMsg = (error as Error).message;
+      console.error("❌ Failed to navigate to partner portal:", errorMsg);
+
+      // If it's a network/timeout issue, throw a specific error for graceful handling
+      if (errorMsg.includes("Timeout") || errorMsg.includes("net::ERR_")) {
+        const skipError = new Error(
+          `Staging server unavailable or too slow: ${errorMsg}`,
+        );
+        (skipError as any).isNetworkError = true;
+        throw skipError;
+      }
+
       throw error;
     }
 
     try {
-      await page.waitForURL("**/dashboard**", { timeout: 90000 });
+      await page.waitForURL("**/dashboard**", { timeout: 60000 });
     } catch (error) {
       console.error("❌ Failed to reach dashboard:", error);
       console.log("📸 Current URL:", page.url());
@@ -36,7 +47,7 @@ export class PublisherPage extends IstoolsPage {
 
     try {
       await page.goto(signInUrl, {
-        waitUntil: "networkidle",
+        waitUntil: "load",
         timeout: 60000,
       });
     } catch (error) {
@@ -49,7 +60,7 @@ export class PublisherPage extends IstoolsPage {
       await this.fill(this.passwordTextBox, PUB_PASSWORD);
       await this.click(this.signInButton);
 
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("load");
 
       await page.waitForURL("**/dashboard**", { timeout: 60000 });
     } catch (error) {
@@ -62,15 +73,44 @@ export class PublisherPage extends IstoolsPage {
   async loginPubProd(username: string, password: string) {
     const page = this.page;
     const signInUrl = `https://publisher.accesstrade.co.id/#/sign-in`;
+    const maxRetries = 2;
 
-    try {
-      await page.goto(signInUrl, {
-        waitUntil: "networkidle",
-        timeout: 60000,
-      });
-    } catch (error) {
-      console.error("❌ Failed to navigate to sign-in page:", error);
-      throw error;
+    let lastError: Error | null = null;
+
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        console.log(
+          `[Attempt ${attempt + 1}/${maxRetries}] Navigating to production sign-in page...`,
+        );
+        await page.goto(signInUrl, {
+          waitUntil: "domcontentloaded",
+          timeout: 45000,
+        });
+        console.log("✓ Successfully navigated to sign-in page");
+        break;
+      } catch (error) {
+        lastError = error as Error;
+        console.warn(
+          `⚠ Navigation attempt ${attempt + 1} failed: ${(error as Error).message}`,
+        );
+
+        if (attempt < maxRetries - 1) {
+          console.log("Retrying in 2 seconds...");
+          await page.waitForTimeout(2000);
+        }
+      }
+    }
+
+    if (lastError) {
+      console.error(
+        "❌ Failed to navigate to sign-in page after retries:",
+        lastError.message,
+      );
+      const skipError = new Error(
+        `Production server unavailable or too slow: ${lastError.message}`,
+      );
+      (skipError as any).isNetworkError = true;
+      throw skipError;
     }
 
     try {
@@ -78,7 +118,7 @@ export class PublisherPage extends IstoolsPage {
       await this.fill(this.passwordTextBox, password);
       await this.click(this.signInButton);
 
-      await page.waitForLoadState("networkidle");
+      await page.waitForLoadState("load");
 
       await page.waitForURL("**/dashboard**", { timeout: 60000 });
     } catch (error) {
