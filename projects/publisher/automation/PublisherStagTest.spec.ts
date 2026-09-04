@@ -257,7 +257,9 @@ test.describe("Publisher Staging Tests", () => {
 
       await publisherPage.page
         .locator('input[type="file"]')
-        .setInputFiles("test-data/images/lgtm.png");
+        .setInputFiles(
+          path.resolve(__dirname, "../../../shared/fixtures/images/lgtm.png"),
+        );
 
       await publisherPage.page
         .locator('input[name="firstName"]')
