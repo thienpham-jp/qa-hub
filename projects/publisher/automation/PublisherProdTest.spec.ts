@@ -244,7 +244,9 @@ test.describe("Publisher Production Tests", () => {
       // 3. Input NPWP Photo
       await publisherPage.page
         .locator('input[type="file"]')
-        .setInputFiles("test-data/images/lgtm.png");
+        .setInputFiles(
+          path.resolve(__dirname, "../../../shared/fixtures/images/lgtm.png"),
+        );
 
       // 3. Input first name
       await publisherPage.page
