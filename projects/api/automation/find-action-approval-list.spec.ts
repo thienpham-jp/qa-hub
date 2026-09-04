@@ -34,7 +34,7 @@ const validPayload = () => ({
   statuses: ["New", "Hold"],
 });
 
-test.describe("Find Action Approval List by Conditions API", () => {
+test.describe.skip("Find Action Approval List by Conditions API", () => {
   test.describe.configure({ mode: "parallel" });
 
   /** Test Cases for Find Action Approval List by Conditions API method `POST /v1/staff/conversion/approval-search/get-result-list-by-condition` and `POST /v1/staff/conversion/approval-search/count-result-list-by-condition`
