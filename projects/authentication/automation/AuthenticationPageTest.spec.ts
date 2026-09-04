@@ -1,8 +1,8 @@
-import { test, expect } from '@playwright/test';
-import { AuthenticationPage } from '@shared/pages/AuthenticationPage';
-import testData from './authenticationTestData.json';
+import { test, expect } from "@playwright/test";
+import { AuthenticationPage } from "@shared/pages/AuthenticationPage";
+import testData from "./authenticationTestData.json";
 
-test.describe('Authentication Tests', () => {
+test.describe("Authentication Tests", () => {
   let authen: AuthenticationPage;
 
   test.beforeEach(async ({ page }) => {
@@ -15,7 +15,9 @@ test.describe('Authentication Tests', () => {
       await authen.login(data.username, data.password);
 
       await expect(page).toHaveURL(data.expectedUrl);
-      expect(await authen.isMessageContent(data.messageType, data.expectedMessage)).toBe(true);
+      expect(
+        await authen.isMessageContent(data.messageType, data.expectedMessage),
+      ).toBe(true);
     });
   }
 
