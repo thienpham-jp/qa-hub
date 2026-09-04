@@ -14,7 +14,7 @@
      - Duration: Smart Duration → This month.
      - Find by Date: Occur date.
 - **Expected result**: The list automatically loads and displays the correct current-month New/Hold conversions, matching the existing DB data.
-- **Automated**: no
+- **Automated**: yes — [find-action-approval-list.spec.ts](../../api/automation/find-action-approval-list.spec.ts)
 - **Status**: ✅ Passed
 
 ---
@@ -45,7 +45,7 @@
   4. Confirm the action if a confirmation popup appears.
 - **Expected result**: The selected records are updated to the corresponding status. Gurkha/Hussar APIs are called successfully and the database is updated correctly.
 - **Automated**: no
-- **Status**: ✅ Passed
+- **Status**: ⏭️ Skipped
 
 ---
 
@@ -120,7 +120,7 @@
   2. Click CSV or Excel.
 - **Expected result**: The file is downloaded successfully. The exported data, row count, and formatting match the data displayed in the grid.
 - **Automated**: no
-- **Status**: ✅ Passed
+- **Status**: ⏭️ Skipped
 
 ---
 
@@ -192,4 +192,32 @@
   2. Click Search.
 - **Expected result**: A loading state is displayed while processing. After timeout, a clear error message is shown, such as "Unable to connect to the server. Please try again later." The UI must not remain stuck or expose raw Java stack traces.
 - **Automated**: no
-- **Status**: ⚠️ Pending
+- **Status**: ⏭️ Skipped
+
+---
+
+**ID**: TC-CVA-14
+
+- **Title**: Verify behavior when clicking Search multiple times
+- **Priority**: High
+- **Preconditions**: None
+- **Steps**:
+  1. Enter valid search criteria.
+  2. Click Search twice consecutively.
+- **Expected result**: System handles repeated clicks correctly without duplicate requests, duplicated records, UI errors, or inconsistent search results.
+- **Automated**: no
+- **Status**: ✅ Passed
+
+---
+
+**ID**: TC-CVA-15
+
+- **Title**: Verify performance with a large dataset
+- **Priority**: High
+- **Preconditions**: None
+- **Steps**:
+  1. Load Affiliation List without filters with approximately 1 million records.
+  2. Monitor API response and UI performance.
+- **Expected result**: Server-side pagination handles the large dataset efficiently. The browser remains responsive without 504 Gateway Timeout or similar errors.
+- **Automated**: no
+- **Status**: ⏭️ Skipped
