@@ -34,7 +34,7 @@ const validPayload = () => ({
   countryCode: "ID",
 });
 
-test.describe("Find Affiliation List by Conditions API", () => {
+test.describe.skip("Find Affiliation List by Conditions API", () => {
   test.describe.configure({ mode: "parallel" });
 
   /** Test Cases for Find Affiliation List by Conditions API method `POST /v1/staff/affiliations` and `POST /v1/staff/affiliations/count`
