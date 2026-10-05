@@ -13,3 +13,5 @@ dashboard/combined-allure-results/
 dashboard/combined-report/
 
 *.log
+
+/.github/
