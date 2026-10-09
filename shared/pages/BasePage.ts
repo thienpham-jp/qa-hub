@@ -1,4 +1,4 @@
-import { BrowserContext, Page, Locator } from "@playwright/test";
+import { BrowserContext, Page } from "@playwright/test";
 
 export class BasePage {
   public page: Page;
@@ -46,7 +46,7 @@ export class BasePage {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
         await this.page.goto(url, {
-          waitUntil: "load",
+          waitUntil: "domcontentloaded",
           timeout: 30000,
         });
         console.log(`✓ Navigation to ${url} successful on attempt ${attempt}`);
@@ -57,10 +57,7 @@ export class BasePage {
 
         // Check if it's a network error that might be transient
         const isTransientError =
-          errorMessage.includes("ERR_HTTP_RESPONSE_CODE_FAILURE") ||
-          errorMessage.includes("ERR_CONNECTION_REFUSED") ||
-          errorMessage.includes("ERR_NETWORK_CHANGED") ||
-          errorMessage.includes("ERR_TUNNEL_CONNECTION_FAILED") ||
+          lastError.name === "TimeoutError" ||
           errorMessage.includes("net::ERR_");
 
         if (!isTransientError) {
