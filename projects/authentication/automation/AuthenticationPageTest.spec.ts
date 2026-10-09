@@ -7,7 +7,6 @@ test.describe("Authentication Tests", () => {
 
   test.beforeEach(async ({ page }) => {
     authen = new AuthenticationPage(page);
-    await authen.navigate();
   });
 
   for (const data of testData) {
